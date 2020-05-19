@@ -6,6 +6,29 @@ def s1(argv):
     ar.sort()
     return ar
 
+
+def partition(arr,low,high): 
+    i = ( low-1 )         # index of smaller element 
+    pivot = arr[high]     # pivot 
+    for j in range(low , high): 
+        if   arr[j] < pivot: 
+            i = i+1 
+            arr[i],arr[j] = arr[j],arr[i] 
+  
+    arr[i+1],arr[high] = arr[high],arr[i+1] 
+    return ( i+1 ) 
+
+
+def quickSort(argv): 
+    arr = argv[0]
+    low = argv[1]
+    high = argv[2]
+    if low < high: 
+        pi = partition(arr,low,high) 
+        quickSort([arr, low, pi-1]) 
+        quickSort([arr, pi+1, high]) 
+  
+
 def merge(arr, l, m, r): 
     n1 = m - l + 1
     n2 = r- m 
@@ -35,26 +58,26 @@ def merge(arr, l, m, r):
         j += 1
         k += 1
 
-def s2(argv):
+def mergeSort(argv):
     arr = argv[0]
     l = argv[1]
     r = argv[2]
     if l < r: 
         m = (l+(r-1))//2 
-        s2([arr, l, m]) 
-        s2([arr, m+1, r]) 
+        mergeSort([arr, l, m]) 
+        mergeSort([arr, m+1, r]) 
         merge(arr, l, m, r) 
   
 test1 = Benchmark()
 test2 = Benchmark()
 i = 10
-top = 10**4
+top = 10**5
 while i<top:
     print(i,top)
     ar = [randint(1,10**5) for i in range(i)]
-    time = test1.run(s1,ar)
+    time = test1.run(quickSort, ar, 0, len(ar)-1)
     test1.add(len(ar),time)
-    time = test2.run(s2, ar, 0, len(ar)-1)
+    time = test2.run(mergeSort, ar, 0, len(ar)-1)
     test2.add(len(ar),time)
-    i = int(2*i)
+    i = int(1.5*i)
 test1.compare("Length", "Time", "Sort comparision", test2)
