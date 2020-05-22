@@ -1,7 +1,7 @@
 import time as t
 import numpy as np
 import matplotlib.pyplot as plt
-
+import tracemalloc
 
 class Benchmark:
 
@@ -13,17 +13,22 @@ class Benchmark:
 
     def run(self, func, *argv):
         self.functionName = func.__name__
+        tracemalloc.start()
         start = t.time()
         # print(var)
         func(argv)
         end = t.time()
+        __,peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
         runtime = end - start
         print(f'The runtime for {func.__name__} took {runtime} seconds to complete')
-        return runtime
+        return runtime, peak/10**6
 
     def add(self, index, time=None, memory=None):
-        self.time.append([index, time])
-        self.memory.append([index, memory])
+        if time:
+            self.time.append([index, time])
+        if memory:
+            self.memory.append([index, memory])
     
     def plotGraph(self, xlabel="", ylabel="", title="", label="", show=True, plt=plt):
         time = np.array(self.time)
@@ -43,4 +48,3 @@ class Benchmark:
             other.plotGraph(xlabel=xlabel, ylabel=ylabel, title=title, label=other.functionName, show=False, plt=temp)
         temp.legend(loc="upper right")
         temp.show()
-
