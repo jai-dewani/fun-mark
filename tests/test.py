@@ -1,7 +1,8 @@
-from funmark import Benchmark
+import funmark
 from random import randint
 
-def s1(argv):
+
+def timSort(argv):
     ar = argv[0]
     ar.sort()
     return ar
@@ -29,7 +30,7 @@ def quickSort(argv):
         quickSort([arr, pi+1, high]) 
   
 
-def merge(arr, l, m, r): 
+def mergeList(arr, l, m, r): 
     n1 = m - l + 1
     n2 = r- m 
     L = [0] * (n1) 
@@ -59,6 +60,7 @@ def merge(arr, l, m, r):
         k += 1
 
 def mergeSort(argv):
+    # print(argv)
     arr = argv[0]
     l = argv[1]
     r = argv[2]
@@ -66,18 +68,27 @@ def mergeSort(argv):
         m = (l+(r-1))//2 
         mergeSort([arr, l, m]) 
         mergeSort([arr, m+1, r]) 
-        merge(arr, l, m, r) 
-  
-test1 = Benchmark()
-test2 = Benchmark()
+        mergeList(arr, l, m, r) 
+
+merge = funmark.Benchmark()
+quick = funmark.Benchmark()
+tim = funmark.Benchmark()
 i = 10
-top = 10**5
+top = 10**4
 while i<top:
     print(i,top)
     ar = [randint(1,10**5) for i in range(i)]
-    time = test1.run(quickSort, ar, 0, len(ar)-1)
-    test1.add(len(ar),time)
-    time = test2.run(mergeSort, ar, 0, len(ar)-1)
-    test2.add(len(ar),time)
+    
+    time, memory = merge.run(quickSort, ar, 0, len(ar)-1)
+    merge.add(len(ar), time, memory)
+    
+    time, memory= quick.run(mergeSort, ar, 0, len(ar)-1)
+    quick.add(len(ar), time, memory)
+
+    time, memory = tim.run(timSort, ar)
+    tim.add(len(ar), time, memory)
+
     i = int(2*i)
-test1.compare("Length", "Time", "Sort comparision", test2)
+
+merge.compareTime("Length", "Time", "Compression between Sorting Algorithms", quick, tim)
+merge.compareMemory("Length", "Time", "Compression between Sorting Algorithms", quick, tim)
