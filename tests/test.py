@@ -74,7 +74,7 @@ merge = funmark.Benchmark()
 quick = funmark.Benchmark()
 tim = funmark.Benchmark()
 i = 10
-top = 10**5
+top = 10**4
 while i<top:
     print(i,top)
     ar = [randint(1,10**5) for i in range(i)]
@@ -90,4 +90,5 @@ while i<top:
 
     i = int(2*i)
 
-merge.compare("Length", "Time", "Sort comparision", quick, tim)
+merge.compareTime("Length", "Time", "Compression between Sorting Algorithms", quick, tim)
+merge.compareMemory("Length", "Time", "Compression between Sorting Algorithms", quick, tim)

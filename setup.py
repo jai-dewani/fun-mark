@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name='funmark',  
     version='0.1.1.dev2',
-    scripts=['funmark/main.py'] ,
+    scripts=['funmark/Benchmark.py'] ,
     author="Jai Kumar Dewani",
     author_email="jai.dewani.99@gmail.com",
     description="A benchmarking tool for fuctions",

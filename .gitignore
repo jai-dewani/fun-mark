@@ -3,3 +3,4 @@ __pycache__/
 build/
 funmark.egg-info/
 *.pyc
+funmark/
