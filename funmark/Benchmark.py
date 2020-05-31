@@ -11,7 +11,7 @@ class Benchmark:
         self.plot = None
         self.functionName = None
 
-    def run(self, func, *argv):
+    def run(self, func, *argv, logs=True):
         """
         return:
         runtime: int, the time it took to run (seconds)
