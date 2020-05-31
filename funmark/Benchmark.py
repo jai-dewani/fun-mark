@@ -20,13 +20,13 @@ class Benchmark:
         self.functionName = func.__name__
         tracemalloc.start()
         start = t.time()
-        # print(var)
         func(argv)
         end = t.time()
         __,peak = tracemalloc.get_traced_memory()
         tracemalloc.stop()
         runtime = end - start
-        print(f'The runtime for {func.__name__} took {runtime} seconds to complete with {peak/10**3}KB memory')
+        if logs:
+            print(f'The runtime for {func.__name__} took {runtime} seconds to complete with {peak/10**3}KB memory')
         return runtime, peak/10**3
 
     def add(self, index, time=None, memory=None):
@@ -37,7 +37,6 @@ class Benchmark:
     
     def plotTime(self, xlabel="", ylabel="", title="", label="", show=True, plt=plt):
         time = np.array(self.time)
-        print('time',time)
         plt.plot(time[:,0],time[:,1], label=label)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
@@ -48,7 +47,6 @@ class Benchmark:
 
     def plotMemory(self, xlabel="", ylabel="", title="", label="", show=True, plt=plt):
         memory = np.array(self.memory)
-        print('memory',memory)
         plt.plot(memory[:,0],memory[:,1], label=label)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
