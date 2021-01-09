@@ -1,4 +1,5 @@
-# FunMark
+[![Downloads](https://pepy.tech/badge/funmark)](https://pepy.tech/project/funmark)
+# FunMark 
 
 A package to bench-mark python fun-ctions for runtime and memory usage and to using methods like plotting to view and compare the results easy!
 
